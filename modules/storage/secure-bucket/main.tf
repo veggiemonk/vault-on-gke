@@ -3,7 +3,7 @@ resource "google_storage_bucket" "storage" {
   name          = "${var.project_id}-${var.name}"
   project       = "${var.project_id}"
   force_destroy = true
-  storage_class = "${var.storage_class}" 
+  storage_class = "${var.storage_class}"
 
   versioning {
     enabled = "${var.versioning}"
@@ -19,7 +19,8 @@ resource "google_storage_bucket" "storage" {
     }
   }
 
-#   depends_on = ["google_project_service.service"]
+  #TODO custom_lables!!!!
+  #   depends_on = ["google_project_service.service"]
 }
 
 # Grant service account access to the storage bucket
