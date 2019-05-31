@@ -5,4 +5,3 @@ output "ca" {
 output "signed" {
   value = "${tls_locally_signed_cert.signed.cert_pem}"
 }
-
