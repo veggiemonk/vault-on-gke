@@ -1,0 +1,27 @@
+
+timeout: 3600s # 1h
+steps:
+- name: 'eu.gcr.io/${PROJECT_ID}/terraform'
+  dir: 'terraform'
+  args: ['init']
+  env:
+    - "TF_VAR_project_id=${PROJECT_ID}"
+- name: 'eu.gcr.io/${PROJECT_ID}/terraform'
+  dir: 'terraform'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+        terraform plan 2>&1 |  grep ID | awk '{ print $2 }' > LOCK_ID
+  env:
+    - "TF_VAR_project_id=${PROJECT_ID}"
+
+- name: 'eu.gcr.io/${PROJECT_ID}/terraform'
+  dir: 'terraform'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+        terraform force-unlock -force $(cat LOCK_ID)
+  env:
+    - "TF_VAR_project_id=${PROJECT_ID}"
