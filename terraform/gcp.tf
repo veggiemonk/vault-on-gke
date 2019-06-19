@@ -273,31 +273,31 @@ resource "google_container_cluster" "vault" {
   # here as well.
   enable_legacy_abac = false
 
-  node_config {
-    machine_type    = var.kubernetes_instance_type
-    service_account = google_service_account.vault-server.email
+  # node_config {
+  #   machine_type    = var.kubernetes_instance_type
+  #   service_account = google_service_account.vault-server.email
 
-    oauth_scopes = [
-      "https://www.googleapis.com/auth/cloud-platform",
-    ]
+  #   oauth_scopes = [
+  #     "https://www.googleapis.com/auth/cloud-platform",
+  #   ]
 
-    # Set metadata on the VM to supply more entropy
-    metadata = {
-      google-compute-enable-virtio-rng = "true"
-      disable-legacy-endpoints         = "true"
-    }
+  #   # Set metadata on the VM to supply more entropy
+  #   metadata = {
+  #     google-compute-enable-virtio-rng = "true"
+  #     disable-legacy-endpoints         = "true"
+  #   }
 
-    labels = {
-      service = "vault"
-    }
+  #   labels = {
+  #     service = "vault"
+  #   }
 
-    tags = ["vault"]
+  #   tags = ["vault"]
 
-    # Protect node metadata
-    workload_metadata_config {
-      node_metadata = "SECURE"
-    }
-  }
+  #   # Protect node metadata
+  #   workload_metadata_config {
+  #     node_metadata = "SECURE"
+  #   }
+  # }
 
   # Configure various addons
   addons_config {
